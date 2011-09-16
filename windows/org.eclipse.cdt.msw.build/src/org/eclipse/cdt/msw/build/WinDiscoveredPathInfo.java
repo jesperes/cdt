@@ -21,11 +21,12 @@ public class WinDiscoveredPathInfo implements IDiscoveredPathInfo {
 	public WinDiscoveredPathInfo() {
 		// Include paths
 		paths = WinEnvironmentVariableSupplier.getIncludePath();
-				
-		symbols.put("_M_IX86", "600");
-		symbols.put("_WIN32", "1");
-		symbols.put("_MSC_VER", "1400");
-		
+
+		// We may want to add some more symbols here, but these are the
+		// important ones.
+		symbols.putAll(WinEnvironmentVariableSupplier
+				.getPreprocessorSymbolValues("_MSC_VER", "_M_IX86", "_WIN32"));
+
 		// Microsoft specific modifiers that can be ignored
 		symbols.put("__cdecl", "");
 		symbols.put("__fastcall", "");
@@ -52,5 +53,4 @@ public class WinDiscoveredPathInfo implements IDiscoveredPathInfo {
 	public Map<String, String> getSymbols() {
 		return symbols;
 	}
-
 }
